@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface IStatus {
   error: boolean;
@@ -25,9 +26,9 @@ function defaultHeader(token?: string) {
 
 function defaultErrorCallback(err: Error | AxiosError) {
   if (axios.isAxiosError(err)) {
-    throw err;
+    throw new Error(`AxiosError: ${err.message} - Status: ${err.code} - `);
   } else {
-    throw err; // aqui ajudaria a tratar casos que é só um erro generico no código que acabou trigando dentro do axios por ser filho
+    throw new Error(err.message); // aqui ajudaria a tratar casos que é só um erro generico no código que acabou trigando dentro do axios por ser filho
   }
 }
 
@@ -70,7 +71,8 @@ export class Crud {
       .then((response) => defaultReturnCallback<T>(response, returnProp))
       .catch((err: Error | AxiosError) => {
         // todo mapear tipo pra erro
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -82,7 +84,8 @@ export class Crud {
       .post<J>(`${this.url}/${endpoint}`, data)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -94,7 +97,8 @@ export class Crud {
       .patch<J>(`${this.url}/${endpoint}`, data)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -106,7 +110,8 @@ export class Crud {
       .delete<J>(`${this.url}/${endpoint}`, data ? { data } : undefined)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -125,7 +130,8 @@ export class Crud {
       .then((response) => defaultReturnCallback<T>(response, returnProp))
       .catch((err: Error | AxiosError) => {
         // todo mapear tipo pra erro
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -137,7 +143,8 @@ export class Crud {
       .post<J>(`${this.url}/${endpoint}`, data)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -149,7 +156,8 @@ export class Crud {
       .patch<J>(`${this.url}/${endpoint}`, data)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 
@@ -161,7 +169,8 @@ export class Crud {
       .delete<J>(`${this.url}/${endpoint}`, data ? { data } : undefined)
       .then((response) => defaultReturnCallback<J>(response, returnProp))
       .catch((err: Error | AxiosError) => {
-        throw defaultErrorCallback(err);
+        defaultErrorCallback(err);
+        return Promise.reject(err);
       });
   }
 }

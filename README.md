@@ -23,7 +23,6 @@
 - **Start:** `npm run dev` or `yarn dev`
 - **Build:** `npm run build` or `yarn build`
 - Open browser: `http://localhost:3039`
-- test;
 
 ## Upgrade to PRO Version
 
